@@ -42,7 +42,8 @@
         this.isSaving = true
         this.updateUser({id: this.user.id, user: this.editableUser}).then(() => {
           this.$router.push('/users')
-        }).then((x, y) => {
+          this.isSaving = false
+        }).catch(x => {
           this.isSaving = false
         })
       }

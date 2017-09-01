@@ -45,7 +45,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
   @ExceptionHandler(value = {ValidationException.class})
   protected ResponseEntity<Object> handleValidationException(ValidationException ex, WebRequest request) {
     List<RestResponse.Error> errors = new LinkedList<>();
-    ex.getErrors().getFieldErrors().forEach(e -> errors.add(createError(e.getCode(), e.getField(), e.getDefaultMessage())));
+    ex.getErrors().getFieldErrors().forEach(e -> errors.add(createError(e.getCode(), e.getDefaultMessage(), e.getField())));
     RestResponse restResponse = new RestResponse(errors);
     return new ResponseEntity<>(restResponse, HttpStatus.BAD_REQUEST);
   }

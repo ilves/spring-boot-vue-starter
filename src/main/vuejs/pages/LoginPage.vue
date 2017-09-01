@@ -31,7 +31,7 @@
         this.$store.dispatch('accountLoginSubmit', this.params).then(() => {
           this.showMsg({content: 'Login successful. Welcome back!', type: 'success'})
         }).catch((response) => {
-          this.showErrors(response)
+          this.showErrors(response.body.error)
         })
       },
       redirect () {

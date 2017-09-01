@@ -26,11 +26,15 @@
       ...mapActions([
         'addUser', 'showMsg'
       ]),
-      save () {
+      save (errorBag) {
         this.addUser(this.user).then(() => {
           this.$router.push('/users')
-        }).catch((response) => {
-          this.showMsg(response.body.error[0].message)
+        }).catch(({body}) => {
+          this.showMsg({content: body.error[0].message})
+          body.error.forEach(e => {
+            errorBag.add(e.field, e.message, 'server')
+          })
+          console.log(errorBag.first('email'))
         })
       }
     }

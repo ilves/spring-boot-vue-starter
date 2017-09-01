@@ -39,8 +39,8 @@ public class UserValidator implements Validator {
     }
 
     UserResponse existingEmail = userService.findByEmail(user.getEmail());
-     /**if (existingEmail != null && (scenario.equals("CREATE") || !((UpdateUser)user).getId().equals(existingEmail.getId()))) {
+    if (existingEmail != null && (scenario.equals("CREATE") || !((UpdateUser)user).getId().equals(existingEmail.getId()))) {
       errors.rejectValue("email", "user.email.existing", "User with this email already exists");
-    }**/
+    }
   }
 }
