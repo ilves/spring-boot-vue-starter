@@ -25,6 +25,8 @@ const store = new Vuex.Store({
   strict: debug
 })
 
+console.log('olen' + store)
+
 if (module.hot) {
   module.hot.accept([
     './getters',

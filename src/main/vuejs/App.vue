@@ -1,30 +1,15 @@
-<template>
-  <div class="container">
-    <div class="header clearfix">
-      <nav>
-        <ul class="nav nav-pills float-right">
-          <li class="nav-item">
-            <router-link to="/home" active-class="active" class="nav-link">Home</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link class="nav-link" active-class="active" to="/users">Users</router-link>
-          </li>
-          <li v-if="!auth.check()" class="nav-item">
-            <router-link to="/login" active-class="active" class="nav-link">Login</router-link>
-          </li>
-          <li v-if="auth.check()" class="nav-item">
-            <router-link to="/logout" active-class="active" class="nav-link">Logout</router-link>
-          </li>
-        </ul>
-      </nav>
-      <h3 class="text-muted">{{conf.title}}</h3>
-    </div>
-    <router-view></router-view>
-    <Toaster></Toaster>
-    <footer class="footer">
-      <p>&copy; {{conf.author}}</p>
-    </footer>
-  </div>
+<template lang="pug">
+  .container
+    .header.clearfix
+      nav
+        ul.nav.nav-pills.float-right
+          li.nav-item(v-for="item in conf.menu", v-if="item.visible()")
+            router-link(v-bind:to="item.to", active-class="active").nav-link {{item.label}}
+      h3.text-muted {{conf.title}}
+    router-view
+    Toaster
+    footer.footer
+      p &copy; {{conf.author}}
 </template>
 
 <script>

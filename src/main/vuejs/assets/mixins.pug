@@ -1,0 +1,9 @@
+mixin formGroup()
+  .form-group.row&attributes(attributes)
+    block
+
+mixin colInput(_type, _id, _model, _label, _rules)
+  label.col-sm-3.col-form-label(for=_id)= _label
+  .col-sm-9
+    input.form-control(id=_id type=_type name=_id v-model=_model v-validate=_rules v-bind:class="{'is-invalid':errors.has('"+_id+"')}" placeholder=_label)
+    span.invalid-feedback.is-invalid(v-show="errors.has('"+_id+"')") {{ errors.first('#{_id}') }}

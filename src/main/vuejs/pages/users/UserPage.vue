@@ -1,26 +1,25 @@
-<template>
-  <div>
-    <h1><router-link class="btn btn-primary float-right" to="/users/new">Add new user</router-link>Users</h1>
-    <table class="table table-bordered">
-      <thead class="thead-default">
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tr v-for="(user,index) in users" :key="index">
-        <td>{{user.id}}</td>
-        <td>{{user.name}}</td>
-        <td class="text-right">
-          <router-link class="btn btn-outline-primary btn-sm" :to="{ name:'editUser', params: { id: user.id }}">Edit</router-link>
-          <a class="btn btn-sm btn-outline-danger" href="#" @click="delUser(user, $event)">Delete</a>
-        </td>
-      </tr>
-    </table>
-    <Loader :isLoading="users===null"></Loader>
-    <Paginate v-if="pagination!==null" :pageCount="pages" :clickHandler="goToPage" :initialPage="page-1"></Paginate>
-  </div>
+<template lang="pug">
+  div
+    h1 Users
+      router-link.btn.btn-success.float-right(to="/users/new") Add new user
+    p.lead
+      | This page displays all the uses in the system.
+    table.table.table-bordered
+      thead.thead-default
+        tr
+          th ID
+          th Name
+          th Email
+          th Actions
+      tr(v-for="(user,index) in users" v-bind:key="index")
+        td {{user.id}}
+        td {{user.name}}
+        td {{user.email}}
+        td.text-right
+          router-link.btn.btn-outline-primary.btn-sm.mr-2(v-bind:to="{ name:'editUser', params: { id: user.id }}") Edit
+          a.btn.btn-sm.btn-outline-danger(href="#", @click="delUser(user, $event)") Delete
+    Loader(v-bind:isLoading="users===null")
+    Paginate(v-if="pagination!==null", v-bind:pageCount="pages", v-bind:clickHandler="goToPage", v-bind:initialPage="page-1")
 </template>
 
 <script>
