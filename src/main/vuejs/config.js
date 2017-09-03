@@ -19,5 +19,9 @@ export default {
     to: '/logout',
     label: 'Logout',
     visible: () => store.state.account.auth.check()
+  }, {
+    to: '/register',
+    label: 'Register',
+    visible: () => !store.state.account.auth.check()
   }]
 }

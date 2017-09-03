@@ -19,7 +19,6 @@ public class MyAccessDeniedHandler implements AccessDeniedHandler, Authenticatio
   @Override
   public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException e)
     throws IOException, ServletException {
-    System.out.println("EEE");
     response.setStatus(HttpStatus.UNAUTHORIZED.value());
     OutputStream out = response.getOutputStream();
     ObjectMapper mapper = new ObjectMapper();
@@ -30,7 +29,6 @@ public class MyAccessDeniedHandler implements AccessDeniedHandler, Authenticatio
   @Override
   public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException e)
     throws IOException, ServletException {
-    System.out.println("EEE");
     response.setStatus(HttpStatus.UNAUTHORIZED.value());
     OutputStream out = response.getOutputStream();
     ObjectMapper mapper = new ObjectMapper();

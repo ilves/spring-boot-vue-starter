@@ -1,6 +1,7 @@
 import api from '../../api'
 import {
-  ACCOUNT_AUTH_STATUS_CHANGED
+  ACCOUNT_AUTH_STATUS_CHANGED,
+  SUCCESS_ACCOUNT_REGISTER
 } from '../types'
 
 const AUTH = 'auth'
@@ -32,6 +33,11 @@ const actions = {
       store.commit(ACCOUNT_AUTH_STATUS_CHANGED, {data: null})
       resolve(true)
     })
+  },
+  accountRegister (store, data) {
+    return api.accountRegister(data).then(response => {
+      store.commit(SUCCESS_ACCOUNT_REGISTER, { user: response.body.data })
+    })
   }
 }
 
@@ -50,6 +56,8 @@ const mutations = {
       state.auth.isAdmin = data.admin
       localStorage.setItem(AUTH, JSON.stringify(data))
     }
+  },
+  [SUCCESS_ACCOUNT_REGISTER] (state, payload) {
   }
 }
 

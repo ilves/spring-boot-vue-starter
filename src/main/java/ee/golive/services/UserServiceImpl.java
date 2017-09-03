@@ -1,9 +1,6 @@
 package ee.golive.services;
 
-import ee.golive.controllers.api.models.user.CreateUser;
-import ee.golive.controllers.api.models.user.UserCommon;
-import ee.golive.controllers.api.models.user.UserResponse;
-import ee.golive.controllers.api.models.user.UpdateUser;
+import ee.golive.controllers.api.models.user.*;
 import ee.golive.entity.User;
 import ee.golive.model.Principal;
 import ee.golive.repository.UserRepository;
@@ -19,6 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Date;
 
 @Service
 public class UserServiceImpl implements UserDetailsService {
@@ -56,6 +54,14 @@ public class UserServiceImpl implements UserDetailsService {
   }
 
   @Transactional
+  public UserResponse register(RegisterUser userData) {
+    User user = modelMapper.map(userData, User.class);
+    user.setPassword(bCryptPasswordEncoder.encode(userData.getPassword()));
+    userRepository.save(user);
+    return modelMapper.map(user, UserResponse.class);
+  }
+
+  @Transactional
   public UserResponse update(Long id, UpdateUser userData) {
     User user = userRepository.findOne(id);
     mapCommon(userData, user);
@@ -70,6 +76,13 @@ public class UserServiceImpl implements UserDetailsService {
   public void delete(Long id) {
     User user = userRepository.findOne(id);
     userRepository.delete(user);
+  }
+
+  @Transactional
+  public void updateLastLogin(Long id, Date date) {
+    User user = userRepository.findOne(id);
+    user.setLastLogin(date);
+    userRepository.save(user);
   }
 
   @Override

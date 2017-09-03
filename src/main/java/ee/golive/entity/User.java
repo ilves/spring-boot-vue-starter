@@ -1,6 +1,7 @@
 package ee.golive.entity;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "user")
@@ -22,6 +23,9 @@ public class User {
 
   @Column(nullable = false, name = "admin")
   private boolean isAdmin;
+
+  @Column(nullable = true)
+  private Date lastLogin;
 
   public Long getId() {
     return id;
@@ -61,5 +65,13 @@ public class User {
 
   public void setAdmin(boolean admin) {
     isAdmin = admin;
+  }
+
+  public Date getLastLogin() {
+    return lastLogin;
+  }
+
+  public void setLastLogin(Date lastLogin) {
+    this.lastLogin = lastLogin;
   }
 }

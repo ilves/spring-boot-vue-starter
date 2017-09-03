@@ -57,7 +57,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
       .authorizeRequests()
       .antMatchers("/", "/v2/api-docs", "/swagger-resources/**", "/swagger-ui.html").permitAll()
       .antMatchers( "/webjars/**").permitAll()
-      .antMatchers(HttpMethod.POST, "/api/account/login").permitAll()
+      .antMatchers(HttpMethod.POST, "/api/account/login", "/api/account/register").permitAll()
       .anyRequest().authenticated().and()
       .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint).accessDeniedHandler(accessDeniedHandler()).and()
       .addFilterBefore(new MyRequestFilter(), UsernamePasswordAuthenticationFilter.class)

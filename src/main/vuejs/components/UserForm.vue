@@ -6,14 +6,14 @@
     +formGroup
       +colInput("text", "email", "user.email", "Email", "'required|email'")
     +formGroup
-      +colInput("password", "password", "user.password", "Password", "{rules:{required:formType=='CREATE', min:6}}")
-    +formGroup(v-if="formType=='UPDATE'")
-      +colInput("password", "password-repeat", "user.passwordRepeat", "Repeat password", "")
+      +colInput("password", "password", "user.password", "Password", "{rules:{required:formType!='UPDATE', min:6}}")
+    +formGroup(v-if="formType!='CREATE'")
+      +colInput("password", "passwordRepeat", "user.passwordRepeat", "Repeat password", "")
     +formGroup
       .col-sm-12
         button.btn.btn-primary(@click="submit" v-bind:class="{disabled:isLoading}")
           span(v-if="!isLoading") Save
-          span(v-else="") Loading..
+          span(v-else="") Loading...
 </template>
 
 <script>
@@ -37,11 +37,6 @@
       handleSubmit: {
         type: Function,
         required: true
-      }
-    },
-    watch: {
-      errors () {
-        console.log('muutus')
       }
     },
     methods: {

@@ -10,16 +10,19 @@
           th ID
           th Name
           th Email
+          th Last login
           th Actions
-      tr(v-for="(user,index) in users" v-bind:key="index")
+      tr(v-for="(user,index) in users", :key="index")
         td {{user.id}}
         td {{user.name}}
         td {{user.email}}
+        td {{user.lastLogin ? new Date(user.lastLogin).toLocaleString() : '-'}}
         td.text-right
-          router-link.btn.btn-outline-primary.btn-sm.mr-2(v-bind:to="{ name:'editUser', params: { id: user.id }}") Edit
+          router-link.btn.btn-outline-primary.btn-sm.mr-2(:to="{name:'editUser', params:{id:user.id}}") Edit
           a.btn.btn-sm.btn-outline-danger(href="#", @click="delUser(user, $event)") Delete
     Loader(v-bind:isLoading="users===null")
-    Paginate(v-if="pagination!==null", v-bind:pageCount="pages", v-bind:clickHandler="goToPage", v-bind:initialPage="page-1")
+    | Leht on: {{currentPage}}
+    Paginate(v-if="pagination!==null", :pageCount="pages", :clickHandler="goToPage", :page="currentPage-1")
 </template>
 
 <script>
@@ -34,7 +37,7 @@
       ...mapState({
         users: ({users}) => users.list.users,
         pagination: ({users}) => users.list.pagination,
-        defaultPage: ({users}) => users.list.page
+        page: ({users}) => users.list.page
       }),
       pages () {
         if (this.pagination === null) {
@@ -42,29 +45,42 @@
         }
         return Math.ceil(this.pagination.totalCount / this.pagination.limit)
       },
-      page () {
+      currentPage () {
         let page = this.$route.params.page
-        return page === undefined ? this.defaultPage : parseInt(page)
+        return page === undefined ? this.page : parseInt(page)
+      }
+    },
+    watch: {
+      users (val) {
+        if (val.length <= 0 && this.pages > 0 && this.currentPage > 0) {
+          this.goToPage(this.pages - 1)
+        }
+      },
+      currentPage (page) {
+        this.loadData(page)
       }
     },
     methods: {
       ...mapActions([
-        'initListUsers', 'deleteUser'
+        'initListUsers', 'deleteUser', 'showMsg'
       ]),
       delUser (user, $e) {
         $e.preventDefault()
         this.deleteUser(user.id).then(() => {
-          this.initListUsers({page: this.page})
+          this.loadData(this.page)
+        }).then(() => {
+          this.showMsg({content: 'User deleted', 'type': 'success'})
         })
       },
-      goToPage (page, e) {
-        e.preventDefault()
-        this.$router.push({name: 'users', params: { page }})
-        this.initListUsers({page: page})
+      goToPage (page) {
+        this.$router.push({name: 'users', params: { page: ++page }})
+      },
+      loadData (page) {
+        this.initListUsers({page})
       }
     },
     created () {
-      this.initListUsers({page: this.page})
+      this.loadData(this.currentPage)
     }
   }
 </script>

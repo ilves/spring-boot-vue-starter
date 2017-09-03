@@ -19,7 +19,6 @@ public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
   @Override
   public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e)
     throws IOException, ServletException {
-    System.out.println("EEE");
     response.setStatus(HttpStatus.UNAUTHORIZED.value());
     OutputStream out = response.getOutputStream();
     ObjectMapper mapper = new ObjectMapper();

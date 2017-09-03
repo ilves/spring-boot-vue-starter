@@ -12,7 +12,7 @@ const state = {
     users: null,
     pagination: null,
     page: 1,
-    size: 10
+    size: 1
   },
   edit: {
     user: null
@@ -28,7 +28,6 @@ const actions = {
     })
   },
   initListUsers ({ commit }, {page}) {
-    console.log('LIST INITED: ' + page)
     api.getUsers({page: page, size: state.list.size}).then(response => {
       commit(SUCCESS_INIT_LIST_USERS, {
         users: response.body.data,

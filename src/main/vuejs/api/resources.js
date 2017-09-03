@@ -19,6 +19,7 @@ Vue.http.interceptors.push((request, next) => {
 
 export const UserResource = Vue.resource(API_ROOT + '/users{/id}')
 export const AccountResource = Vue.resource(API_ROOT + '/account', {}, {
-  login: {method: 'POST', url: API_ROOT + '/account/login'}
+  login: {method: 'POST', url: API_ROOT + '/account/login'},
+  register: {method: 'POST', url: API_ROOT + '/account/register'}
 })
 

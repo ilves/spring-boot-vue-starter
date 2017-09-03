@@ -3,6 +3,7 @@ package ee.golive.validators;
 import ee.golive.controllers.api.models.user.UserResponse;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Errors;
 
@@ -13,11 +14,11 @@ import static org.junit.Assert.assertTrue;
 
 public class UserValidatorTest {
 
+  @Autowired
   UserValidator userValidator;
 
   @Before
   public void setup() {
-    userValidator = new UserValidator();
   }
 
   @Test

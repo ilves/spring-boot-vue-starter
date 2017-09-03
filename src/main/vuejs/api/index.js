@@ -4,6 +4,9 @@ export default {
   accountLogin: function (params) {
     return AccountResource.login(params)
   },
+  accountRegister: function (params) {
+    return AccountResource.register(params)
+  },
   getUser: function (id) {
     return UserResource.get({id: id})
   },

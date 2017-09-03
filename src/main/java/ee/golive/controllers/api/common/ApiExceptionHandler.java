@@ -55,6 +55,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     List<RestResponse.Error> errors = new LinkedList<>();
     RestResponse restResponse = new RestResponse(errors);
     errors.add(createError(null, "Unknown error", null));
+    ex.printStackTrace();
     return new ResponseEntity<>(restResponse, HttpStatus.INTERNAL_SERVER_ERROR);
   }
 

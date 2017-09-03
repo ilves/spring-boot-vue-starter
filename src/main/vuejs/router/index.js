@@ -26,6 +26,13 @@ const router = new Router({
       }
     },
     {
+      path: '/register',
+      component: require('../pages/RegisterPage.vue'),
+      meta: {
+        title: 'Register'
+      }
+    },
+    {
       path: '/logout',
       component: require('../pages/LogoutView.vue'),
       meta: {
@@ -76,13 +83,13 @@ router.beforeEach((to, from, next) => {
         path: '/login',
         query: { redirect_url: to.fullPath }
       })
-      store.dispatch('showMsg', 'Please login to continue')
+      store.dispatch('showMsg', {content: 'Please login to continue'})
       return
     } else if (to.meta.requiresAdmin && !auth.isAdmin) {
       next({
         path: '/'
       })
-      store.dispatch('showMsg', 'Sorry, you don\'t have enough permissions')
+      store.dispatch('showMsg', {content: 'Sorry, you don\'t have enough permissions'})
       return
     }
   }
